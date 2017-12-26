@@ -2,7 +2,7 @@
 {
     public class SqlParameter
     {
-        SqlParameter(string name, object value)
+        public SqlParameter(string name, object value)
         {
             Name = name;
             Value = value;

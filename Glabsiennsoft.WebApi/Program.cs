@@ -12,6 +12,14 @@ namespace Glabsiennsoft.WebApi
 {
     public class Program
     {
+        private static readonly string EnvironmentName
+#if DEBUG
+        = string.Empty;
+#elif DEV
+         = "Development";
+#elif RELEASE
+         = "Production";
+#endif
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
@@ -20,6 +28,7 @@ namespace Glabsiennsoft.WebApi
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseEnvironment(EnvironmentName)
                 .Build();
     }
 }
