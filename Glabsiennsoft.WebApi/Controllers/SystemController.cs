@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Glabsiennsoft.WebApi.Controllers
 {
     [Produces("application/json")]
-    [Route("system")]
+    [Route("api/system")]
     public class SystemController : Controller
     {
         private readonly IMigrator _migrator;

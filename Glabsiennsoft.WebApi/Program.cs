@@ -29,6 +29,12 @@ namespace Glabsiennsoft.WebApi
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseEnvironment(EnvironmentName)
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug();
+                })
                 .Build();
     }
 }

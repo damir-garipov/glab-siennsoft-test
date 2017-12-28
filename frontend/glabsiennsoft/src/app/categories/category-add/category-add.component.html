@@ -1,0 +1,8 @@
+<h2>{{title}}</h2>
+
+<form class="add-category-form">
+    <mat-form-field>
+        <input matInput placeholder="Type Category" [(ngModel)]="categoryDescription"/>
+    </mat-form-field>
+    <button mat-button (click)="saveCategory()">Save</button>
+</form>

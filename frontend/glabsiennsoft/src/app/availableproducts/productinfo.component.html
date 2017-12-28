@@ -1,0 +1,76 @@
+<div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Description: {{product.productDescription}}</mat-card-title>
+            <mat-card-subtitle>[{{product.code}}]</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Field Name</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            ProductDescription
+                        </td>
+                        <td>
+                            {{product.productDescription}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Price
+                        </td>
+                        <td>
+                            {{product.pricePoland}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            IsAvailable
+                        </td>
+                        <td>
+                            {{product.available}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            DelivaryDate
+                        </td>
+                        <td>
+                            {{product.delivaryDateFormat}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            CategoryCount
+                        </td>
+                        <td>
+                            {{product.categoryCount}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Type
+                        </td>
+                        <td>
+                            ({{product.codeType}}) {{type}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Unit
+                        </td>
+                        <td>
+                            ({{product.codeUnit}}) {{unit}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</div>

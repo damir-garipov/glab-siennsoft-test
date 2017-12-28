@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Text.RegularExpressions;
 using Dapper;
+using Glabsiennsoft.Contracts;
 using Glabsiennsoft.Contracts.Common;
 
 namespace Glabsiennsoft.Orm
@@ -63,6 +64,12 @@ namespace Glabsiennsoft.Orm
             }
         }
 
+        public void GetPageCount(int pageSize, string query, IEntityCollectionInfo collectionInfo)
+        {
+            collectionInfo.Count = ExecuteScalar<int>(query);
+            collectionInfo.PageCount = collectionInfo.Count / pageSize + (collectionInfo.Count % pageSize > 0 ? 1 : 0);
+        }
+
         private string GetDbName(string connection)
         {
             var dbName = Regex.Match(connection, @"database=(?<dbName>[\w]+);|initial catalog=(?<dbName>[\w]+);", RegexOptions.IgnoreCase).Groups["dbName"].Value;
@@ -85,7 +92,6 @@ namespace Glabsiennsoft.Orm
                     connection.Close();
                 }
             }
-//            return ExecuteScalar<bool>("select top 1 cast(isExist as bit) from (select 1 isExist from (select id from (select DB_ID(N@dbName) id) s where id is not null)s1 union all select 0)s2", new { dbName });
         }
     }
 }

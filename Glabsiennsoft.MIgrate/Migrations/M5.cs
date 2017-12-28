@@ -12,8 +12,8 @@ namespace Glabsiennsoft.MIgrate.Migrations
                 codeProduct uniqueidentifier not null,
             codeCategory uniqueidentifier not null,
             constraint PK_productcategories primary key(codeProduct, codeCategory),
-            constraint FK_product_categories foreign key(codeProduct) references categories(code) on delete cascade,
-                constraint FK_category_products foreign key(codeCategory) references products(code) on delete cascade
+            constraint FK_productcategories_categories foreign key(codeCategory) references categories(code) on delete cascade,
+                constraint FK_productcategories_products foreign key(codeProduct) references products(code) on delete cascade
             )");
         }
 

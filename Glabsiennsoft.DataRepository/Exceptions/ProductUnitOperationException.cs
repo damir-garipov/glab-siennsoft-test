@@ -1,6 +1,15 @@
-﻿namespace Glabsiennsoft.DataRepository.Exceptions
+﻿using System;
+
+namespace Glabsiennsoft.DataRepository.Exceptions
 {
-    public class ProductUnitOperationException : System.Exception
+    public class EntityOperationException : Exception
+    {
+        public EntityOperationException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+    }
+
+    public class ProductUnitOperationException : EntityOperationException
     {
         public ProductUnitOperationException(string message, System.Exception innerException)
             :base(message, innerException)

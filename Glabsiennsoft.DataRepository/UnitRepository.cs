@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Glabsiennsoft.Contracts.CollectionInfos;
 using Glabsiennsoft.Contracts.Common;
 using Glabsiennsoft.Contracts.DataModel;
+using Glabsiennsoft.Contracts.Repositories;
 using Glabsiennsoft.DataRepository.Exceptions;
 
 namespace Glabsiennsoft.DataRepository
 {
-    public class UnitsRepository
+    public class UnitRepository : IUnitRepository
     {
         private readonly ICommonDb _commonDb;
 
-        public UnitsRepository(ICommonDb commonDb)
+        public UnitRepository(ICommonDb commonDb)
         {
             _commonDb = commonDb;
         }
@@ -20,7 +23,7 @@ namespace Glabsiennsoft.DataRepository
             try
             {
                 var productUnit = new ProductUnit {Description = description};
-                _commonDb.ExecuteNonQuery("insert into productunits(code, description) values(@code, @description)",
+                _commonDb.ExecuteNonQuery("insert into units(code, description) values(@code, @description)",
                     productUnit);
 
                 return productUnit.Code;
@@ -35,7 +38,7 @@ namespace Glabsiennsoft.DataRepository
         {
             try
             {
-                return _commonDb.ExecuteScalar<ProductUnit>("select * from productunits where code = @code", new {code});
+                return _commonDb.Query<ProductUnit>("select * from units where code = @code", new {code}).First();
             }
             catch (Exception e)
             {
@@ -47,7 +50,7 @@ namespace Glabsiennsoft.DataRepository
         {
             try
             {
-                return _commonDb.Query<ProductUnit>("select * from productunits");
+                return _commonDb.Query<ProductUnit>("select * from units");
             }
             catch (Exception e)
             {
@@ -55,11 +58,16 @@ namespace Glabsiennsoft.DataRepository
             }
         }
 
-        public IEnumerable<ProductUnit> Get(int pageNumber, int pageSize)
+        public UnitCollectionInfo Get(int pageNumber, int pageSize)
         {
             try
             {
-                return _commonDb.Query<ProductUnit>($"select * from productunits order by code offset {pageNumber*pageSize-pageSize} rows fetch next {pageSize}");
+                var collectionInfo = new UnitCollectionInfo();
+                collectionInfo.Entities = _commonDb.Query<ProductUnit>($"select * from units order by code offset {pageNumber*pageSize-pageSize} rows fetch next {pageSize} rows only");
+
+                _commonDb.GetPageCount(pageSize, "select count(1) from units", collectionInfo);
+                return collectionInfo;
+
             }
             catch (Exception e)
             {
@@ -71,7 +79,7 @@ namespace Glabsiennsoft.DataRepository
         {
             try
             {
-                var count = _commonDb.ExecuteScalar<int>($"select count(1) from productunits");
+                var count = _commonDb.ExecuteScalar<int>($"select count(1) from units");
                 return count/pageSize+count%pageSize;
             }
             catch (Exception e)
@@ -84,7 +92,7 @@ namespace Glabsiennsoft.DataRepository
         {
             try
             {
-                _commonDb.ExecuteNonQuery("update productunits set description = @description where code = @code", productUnit);
+                _commonDb.ExecuteNonQuery("update units set description = @description where code = @code", productUnit);
             }
             catch (Exception e)
             {
@@ -96,7 +104,7 @@ namespace Glabsiennsoft.DataRepository
         {
             try
             {
-                _commonDb.ExecuteNonQuery("delete productunits where code = @code", new {code});
+                _commonDb.ExecuteNonQuery("delete units where code = @code", new {code});
             }
             catch (Exception e)
             {

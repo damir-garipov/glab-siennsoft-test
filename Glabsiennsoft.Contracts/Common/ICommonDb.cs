@@ -11,5 +11,6 @@ namespace Glabsiennsoft.Contracts.Common
         T ExecuteScalar<T>(string query, object parameters = null);
         int ExecuteNonQuery(string query, object parameters = null);
         void CreateDatabaseIfNotExists();
+        void GetPageCount(int pageSize, string query, IEntityCollectionInfo collectionInfo);
     }
 }

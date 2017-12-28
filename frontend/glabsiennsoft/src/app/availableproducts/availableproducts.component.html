@@ -1,0 +1,58 @@
+<h1>{{title}}</h1>
+
+<div class="category-container">
+    <mat-table #table [dataSource]="dataSource">
+
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Code Column -->
+        <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.code}} </mat-cell>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="isAvailable">
+            <mat-header-cell *matHeaderCellDef> IsAvailable </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.isAvailable}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="deliveryDate">
+            <mat-header-cell *matHeaderCellDef> Delivery Date </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.deliveryDate}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="typeDescription">
+            <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.typeDescription}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="unitDescription">
+            <mat-header-cell *matHeaderCellDef> Unit </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.unitDescription}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Proce </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions" class="mat-table-actions">
+            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-button (click)="deleteItem(element)">Delete</button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" class="t-row" (dblclick)="edit(row)" (click)="select(row)"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="dataCount" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)=changePage($event)>
+    </mat-paginator>
+</div>
